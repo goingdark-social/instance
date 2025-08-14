@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: web
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://github.com/goingdark-social/instance'
+  destinations:
+    - namespace: 'argocd'
+      server: '*'
+    - namespace: 'web'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

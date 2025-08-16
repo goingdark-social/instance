@@ -17,7 +17,6 @@ data:
       code: "https://github.com/goingdark-social/hypebot"
       automation: "Runs every 120 minutes"
       about: "Boosts trending posts from curated instances"
-      contact: "DM operator for feedback or issues"
 
     # Define subscribed instances and
     # their individual limit (top n trending posts)

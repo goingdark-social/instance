@@ -22,7 +22,7 @@ data:
     # their individual limit (top n trending posts)
     # which is again limited by the API to max 20
     subscribed_instances:
-      chaos.social:
+      infosec.exchange:
         limit: 2
       mastodon.social:
         limit: 2

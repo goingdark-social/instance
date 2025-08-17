@@ -6,7 +6,7 @@ metadata:
 data:
   config.yaml: |
     # Refresh interval in minutes
-    interval: 120
+    interval: 30
 
     # Text to add to the bot profile befor the list of subscribed servers
     profile_prefix: "Official hypebot for goingdark.social, automatically boosting top trending posts from selected Mastodon instances:"
@@ -15,7 +15,7 @@ data:
     fields:
       instance: https://goingdark.social
       code: "https://github.com/goingdark-social/hypebot"
-      automation: "Runs every 120 minutes"
+      automation: "Runs every 30 minutes"
       about: "Boosts trending posts from curated instances"
 
     # Define subscribed instances and
@@ -23,9 +23,9 @@ data:
     # which is again limited by the API to max 20
     subscribed_instances:
       chaos.social:
-        limit: 1
+        limit: 2
       mastodon.social:
-        limit: 1
+        limit: 2
 
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the

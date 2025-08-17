@@ -26,6 +26,8 @@ data:
         limit: 2
       mastodon.social:
         limit: 2
+      mas.to:
+        limit: 2
 
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the

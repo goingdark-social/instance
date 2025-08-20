@@ -53,7 +53,13 @@ configMapGenerator:
       - MASTODON_PROMETHEUS_EXPORTER_LOCAL=true
   - name: mastodon-features-env
     literals:
+      - MAX_TOOT_CHARS=1000
       - FETCH_REPLIES_ENABLED=true
+      - FETCH_REPLIES_COOLDOWN_MINUTES=15
+      - FETCH_REPLIES_INITIAL_WAIT_MINUTES=5
+      - FETCH_REPLIES_MAX_GLOBAL=1000
+      - FETCH_REPLIES_MAX_SINGLE=500
+      - FETCH_REPLIES_MAX_PAGES=500
       - IP_RETENTION_PERIOD=15552000
   - name: mastodon-network-env
     literals:

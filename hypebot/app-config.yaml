@@ -6,28 +6,46 @@ metadata:
 data:
   config.yaml: |
     # Refresh interval in minutes
-    interval: 30
+    interval: 60
 
     # Text to add to the bot profile befor the list of subscribed servers
-    profile_prefix: "Official hypebot for goingdark.social, automatically boosting top trending posts from selected Mastodon instances:"
+    profile_prefix: "I am boosting trending posts from:"
 
     # profile fields to fill in
     fields:
-      instance: https://goingdark.social
-      code: "https://github.com/goingdark-social/hypebot"
-      automation: "Runs every 30 minutes"
-      about: "Boosts trending posts from curated instances"
+      code: https://github.com/v411e/hype
+      operator: "YOUR HANDLE HERE"
 
     # Define subscribed instances and
     # their individual limit (top n trending posts)
     # which is again limited by the API to max 20
     subscribed_instances:
-      infosec.exchange:
-        limit: 2
+      chaos.social:
+        limit: 5
       mastodon.social:
+        limit: 5
+      infosec.exchange:
+        limit: 5
+      hachyderm.io:
+        limit: 5
+      fosstodon.org:
+        limit: 4
+      floss.social:
+        limit: 4
+      ioc.exchange:
+        limit: 3
+      mstdn.social:
         limit: 2
-      mas.to:
+      norden.social:
         limit: 2
+      det.social:
+        limit: 1
+      social.linux.pizza:
+        limit: 1
+      sciences.social:
+        limit: 1
+      machteburch.social:
+        limit: 1
 
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the
@@ -37,3 +55,15 @@ data:
     # other instances
     filtered_instances:
       - example.com
+
+    daily_public_cap: 96
+    per_hour_public_cap: 5
+    rotate_instances: true
+    require_media: true
+    skip_sensitive_without_cw: true
+    min_reblogs: 0
+    min_favourites: 0
+    languages_allowlist:
+      - en
+    # Number of posts to remember for duplicate detection
+    seen_cache_size: 6000

@@ -23,12 +23,25 @@ data:
     # which is again limited by the API to max 20
     subscribed_instances:
       infosec.exchange:
-        limit: 2
+        limit: 5
       mastodon.social:
-        limit: 2
+        limit: 5
       mas.to:
+        limit: 5
+      chaos.social:
+        limit: 5
+      fosstodon.org:
+        limit: 4
+      floss.social:
+        limit: 4
+      ioc.exchange:
+        limit: 3
+      mstdn.social:
         limit: 2
-
+      social.tchncs.de:
+        limit: 2
+      norden.social:
+        limit: 2
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the
     # server that marked it as a popular post.
@@ -37,3 +50,6 @@ data:
     # other instances
     filtered_instances:
       - example.com
+
+    daily_public_cap: 96
+    per_hour_public_cap: 5

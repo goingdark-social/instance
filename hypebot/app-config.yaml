@@ -1,4 +1,3 @@
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: hypebot-config
@@ -6,25 +5,29 @@ metadata:
 data:
   config.yaml: |
     # Refresh interval in minutes
-    interval: 60
+    interval: 30
 
     # Text to add to the bot profile befor the list of subscribed servers
-    profile_prefix: "I am boosting trending posts from:"
+    profile_prefix: "Official hypebot for goingdark.social, automatically boosting top trending posts from selected Mastodon instances:"
 
     # profile fields to fill in
     fields:
-      code: https://github.com/v411e/hype
-      operator: "YOUR HANDLE HERE"
+      instance: https://goingdark.social
+      code: "https://github.com/goingdark-social/hypebot"
+      automation: "Runs every 30 minutes"
+      about: "Boosts trending posts from curated instances"
 
     # Define subscribed instances and
     # their individual limit (top n trending posts)
     # which is again limited by the API to max 20
     subscribed_instances:
-      chaos.social:
-        limit: 5
-      mastodon.social:
-        limit: 5
       infosec.exchange:
+        limit: 2
+      mastodon.social:
+        limit: 2
+      mas.to:
+        limit: 2
+      chaos.social:
         limit: 5
       hachyderm.io:
         limit: 5
@@ -35,6 +38,10 @@ data:
       ioc.exchange:
         limit: 3
       mstdn.social:
+        limit: 2
+      social.tchncs.de:
+        limit: 2
+      mastodon.art:
         limit: 2
       norden.social:
         limit: 2
@@ -58,12 +65,3 @@ data:
 
     daily_public_cap: 96
     per_hour_public_cap: 5
-    rotate_instances: true
-    require_media: true
-    skip_sensitive_without_cw: true
-    min_reblogs: 0
-    min_favourites: 0
-    languages_allowlist:
-      - en
-    # Number of posts to remember for duplicate detection
-    seen_cache_size: 6000

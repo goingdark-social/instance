@@ -1,3 +1,4 @@
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: hypebot-config
@@ -22,14 +23,12 @@ data:
     # which is again limited by the API to max 20
     subscribed_instances:
       infosec.exchange:
-        limit: 2
-      mastodon.social:
-        limit: 2
-      mas.to:
-        limit: 2
-      chaos.social:
         limit: 5
-      hachyderm.io:
+      mastodon.social:
+        limit: 5
+      mas.to:
+        limit: 5
+      chaos.social:
         limit: 5
       fosstodon.org:
         limit: 4
@@ -41,19 +40,8 @@ data:
         limit: 2
       social.tchncs.de:
         limit: 2
-      mastodon.art:
-        limit: 2
       norden.social:
         limit: 2
-      det.social:
-        limit: 1
-      social.linux.pizza:
-        limit: 1
-      sciences.social:
-        limit: 1
-      machteburch.social:
-        limit: 1
-
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the
     # server that marked it as a popular post.

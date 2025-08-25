@@ -16,6 +16,11 @@ spec:
         app: mastodon-web
         elasticsearch-client: "true"
     spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       securityContext:
         fsGroup: 991
       containers:
@@ -93,11 +98,11 @@ spec:
             failureThreshold: 24
           resources:
             requests:
-              cpu: "1500m"
-              memory: "1Gi"
+              cpu: "250m"
+              memory: "512Mi"
             limits:
-              cpu: "2000m"
-              memory: "4Gi"
+              cpu: "1"
+              memory: "1Gi"
       volumes:
         - name: db-ca
           secret:

@@ -1,0 +1,17 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: mastodon-elasticsearch-vpa
+  namespace: mastodon
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: elasticsearch-master
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: elasticsearch
+        minAllowed: { cpu: "200m", memory: "768Mi" }
+        maxAllowed: { cpu: "1500m", memory: "2Gi" }

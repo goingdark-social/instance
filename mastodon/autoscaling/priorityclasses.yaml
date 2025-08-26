@@ -1,0 +1,15 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: mastodon-critical
+value: 1000000000
+globalDefault: false
+description: "Keep core datastores online under pressure"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: mastodon-high
+value: 900000000
+globalDefault: false
+description: "Important stateless services"

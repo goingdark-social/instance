@@ -21,11 +21,11 @@ spec:
       archive_timeout: "300"
   patroni:
     initdb:
-      - encoding: UTF8
-      - data-checksums
-      - locale: C
-      - lc-collate: C
-      - lc-ctype: C
+      encoding: UTF8
+      data-checksums: "true"
+      locale: C
+      lc-collate: C
+      lc-ctype: C
 
   spiloFSGroup: 103
   tls:
@@ -53,8 +53,31 @@ spec:
       cpu: 1000m
       memory: 1Gi
 
-  envFrom:
-    - secretRef:
-        name: mastodon-walg-s3
-    - configMapRef:
-        name: mastodon-backup-env
+  env:
+    # from ExternalSecret mastodon-walg-s3
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_SECRET_ACCESS_KEY
+    - name: AWS_ENDPOINT
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_ENDPOINT
+    - name: WAL_S3_BUCKET
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: WAL_S3_BUCKET
+    # from ConfigMap mastodon-backup-env
+    - name: USE_WALG_BACKUP
+      valueFrom:
+        configMapKeyRef:
+          name: mastodon-backup-env
+          key: USE_WALG_BACKUP

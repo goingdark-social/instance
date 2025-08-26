@@ -9,3 +9,20 @@ resources:
 - streaming
 - elasticsearch
 - networking
+- autoscaling/web-hpa.yaml
+- autoscaling/web-vpa.yaml
+- autoscaling/streaming-vpa.yaml
+- autoscaling/sidekiq-vpa.yaml
+- autoscaling/elasticsearch-vpa.yaml
+- autoscaling/web-pdb.yaml
+- autoscaling/streaming-pdb.yaml
+- autoscaling/sidekiq-pdb.yaml
+- autoscaling/priorityclasses.yaml
+patches:
+- path: autoscaling/web-spread-patch.yaml
+- path: autoscaling/streaming-spread-patch.yaml
+- path: autoscaling/redis-priority-patch.yaml
+- path: autoscaling/web-priority-patch.yaml
+- path: autoscaling/streaming-priority-patch.yaml
+- path: autoscaling/sidekiq-priority-patch.yaml
+- path: autoscaling/postgres-priority-patch.yaml

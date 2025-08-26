@@ -15,6 +15,11 @@ spec:
       labels:
         app: mastodon-streaming
     spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       containers:
         - name: streaming
           image: ghcr.io/glitch-soc/mastodon-streaming:nightly.2025-08-09
@@ -69,8 +74,8 @@ spec:
               cpu: "200m"
               memory: "512Mi"
             limits:
-              cpu: "1000m"
-              memory: "2Gi"
+              cpu: "1"
+              memory: "1.5Gi"
       volumes:
         - name: db-ca
           secret:

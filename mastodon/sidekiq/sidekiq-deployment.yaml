@@ -19,6 +19,11 @@ spec:
       securityContext:
         fsGroup: 991
         fsGroupChangePolicy: Always
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       containers:
         - name: sidekiq
           image: ghcr.io/glitch-soc/mastodon:v4.4.3
@@ -68,10 +73,10 @@ spec:
             periodSeconds: 30
           resources:
             requests:
-              cpu: "200m"
-              memory: "512Mi"
+              cpu: "500m"
+              memory: "1536Mi"
             limits:
-              cpu: "1000m"
+              cpu: "1500m"
               memory: "2Gi"
           securityContext:
             runAsNonRoot: true

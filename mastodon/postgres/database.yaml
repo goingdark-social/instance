@@ -14,15 +14,25 @@ spec:
       - createdb
   databases:
     mastodon: mastodon
-  enableLogicalBackup: true
-  logicalBackupSchedule: "0 3 * * *"
+  enableLogicalBackup: false
   postgresql:
     version: "17"
+    parameters:
+      archive_timeout: "300"
+  patroni:
+    initdb:
+      - encoding: UTF8
+      - data-checksums
+      - locale: C
+      - lc-collate: C
+      - lc-ctype: C
+
   spiloFSGroup: 103
   tls:
     secretName: mastodon-postgresql-server
     caSecretName: mastodon-postgresql-ca
     caFile: ca.crt
+
   enableConnectionPooler: true
   enableReplicaConnectionPooler: true
   connectionPooler:
@@ -42,3 +52,9 @@ spec:
     limits:
       cpu: 1000m
       memory: 1Gi
+
+  envFrom:
+    - secretRef:
+        name: mastodon-walg-s3
+    - configMapRef:
+        name: mastodon-backup-env

@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mastodon-pg-amcheck-monthly
+  namespace: mastodon
+spec:
+  schedule: "45 3 1 * *"  # 1st of month 03:45 - stronger checks
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: amcheck-monthly
+              image: postgres:17
+              envFrom:
+                - secretRef:
+                    name: mastodon-db-url
+                - configMapRef:
+                    name: mastodon-db-env
+              env:
+                - name: PGUSER
+                  valueFrom:
+                    secretKeyRef:
+                      name: mastodon-db-url
+                      key: DB_USER
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mastodon-db-url
+                      key: DB_PASS
+                - name: PGSSLMODE
+                  value: verify-ca
+                - name: PGSSLROOTCERT
+                  value: /etc/postgres/ca.crt
+              volumeMounts:
+                - name: db-ca
+                  mountPath: /etc/postgres/ca.crt
+                  subPath: ca.crt
+              command:
+                - bash
+                - -ceu
+                - |
+                  # Deep index check - stronger locks, schedule in a window
+                  pg_amcheck \
+                    -h "${DB_HOST}" -p "${DB_PORT}" -d "${DB_NAME}" \
+                    --parent-check -j 2 -P -v
+          volumes:
+            - name: db-ca
+              secret:
+                secretName: mastodon-postgresql-ca
+                items:
+                  - key: ca.crt
+                    path: ca.crt

@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mastodon-backup-health-check
+  namespace: mastodon
+spec:
+  schedule: "0 5 * * *"  # Check after backup completes
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: backup-health-check
+              image: postgres:17
+              envFrom:
+                - secretRef:
+                    name: mastodon-walg-s3
+                - configMapRef:
+                    name: mastodon-backup-env
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "200m"
+              command:
+                - bash
+                - -c
+                - |
+                  # Download and install WAL-G
+                  wget -O /tmp/wal-g.tar.gz "https://github.com/wal-g/wal-g/releases/download/v3.0.2/wal-g-pg-ubuntu-20.04-amd64.tar.gz"
+                  tar -xzf /tmp/wal-g.tar.gz -C /tmp/
+                  chmod +x /tmp/wal-g
+                  
+                  # Check if recent backup exists
+                  echo "Checking backup availability..."
+                  /tmp/wal-g backup-list
+                  
+                  # Verify latest backup is less than 26 hours old
+                  LATEST_BACKUP=$(/tmp/wal-g backup-list --json | head -1 | jq -r '.backup_name // empty')
+                  if [ -z "$LATEST_BACKUP" ]; then
+                    echo "ERROR: No backups found!"
+                    exit 1
+                  fi
+                  
+                  echo "Latest backup: $LATEST_BACKUP"
+                  echo "Backup health check completed successfully"

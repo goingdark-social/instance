@@ -13,6 +13,7 @@ configMapGenerator:
       - MASTODON_USE_LIBVIPS=true
       - RAILS_LOG_TO_STDOUT=true
       - PREPARED_STATEMENTS=false
+
   - name: mastodon-db-env
     literals:
       - DB_HOST=mastodon-postgresql-pooler
@@ -28,6 +29,22 @@ configMapGenerator:
       - REPLICA_DB_TASKS=false
       - DATABASE_TIMEOUT=60
       - STREAMING_DATABASE_TIMEOUT=10
+
+  - name: mastodon-backup-env
+    literals:
+      - USE_WALG_BACKUP=true
+      - USE_WALG_RESTORE=true
+      - CLONE_USE_WALG_RESTORE=true
+      - BACKUP_SCHEDULE=0 4 * * *
+      - AWS_S3_FORCE_PATH_STYLE=true
+      - WALG_UPLOAD_CONCURRENCY=2
+      - WALG_DISK_RATE_LIMIT=50MB
+      - WAL_BUCKET_SCOPE_PREFIX=
+      - WAL_BUCKET_SCOPE_SUFFIX=
+      - WALG_DOWNLOAD_FILE_RETRIES=15
+      - WALG_BACKUP_COMPRESSION_METHOD=lz4
+      - BACKUP_NUM_TO_RETAIN=7
+
   - name: mastodon-cache-env
     literals:
       - REDIS_HOST=mastodon-redis-master
@@ -38,6 +55,7 @@ configMapGenerator:
       - STREAMING_REDIS_URL=redis://mastodon-redis-master:6379/3
       - QUERY_CACHE_REDIS_URL=redis://mastodon-redis-master:6379/4
       - SIDEKIQ_CONCURRENCY=15
+
   - name: mastodon-search-env
     literals:
       - ES_ENABLED=true
@@ -47,10 +65,12 @@ configMapGenerator:
       - ES_PRESET=single_node_cluster
       - ES_SSL=true
       - ES_CA_FILE=/opt/mastodon/.elasticsearch/ca.crt
+
   - name: mastodon-metrics-env
     literals:
       - MASTODON_PROMETHEUS_EXPORTER_ENABLED=true
       - MASTODON_PROMETHEUS_EXPORTER_LOCAL=true
+
   - name: mastodon-features-env
     literals:
       - MAX_TOOT_CHARS=1000
@@ -61,6 +81,7 @@ configMapGenerator:
       - FETCH_REPLIES_MAX_SINGLE=500
       - FETCH_REPLIES_MAX_PAGES=500
       - IP_RETENTION_PERIOD=15552000
+
   - name: mastodon-network-env
     literals:
       - PORT=3000
@@ -70,6 +91,7 @@ configMapGenerator:
       - MAX_THREADS=5
       - STREAMING_API_BASE_URL=wss://goingdark.social
       - STREAMING_PORT=4000
+
   - name: mastodon-storage-env
     literals:
       - S3_ENABLED=true
@@ -79,6 +101,7 @@ configMapGenerator:
       - S3_REGION=auto
       - S3_PERMISSION=
       - EXTRA_MEDIA_HOSTS=https://cdn.goingdark.social
+
   - name: mastodon-smtp-env
     literals:
       - SMTP_DELIVERY_METHOD=smtp

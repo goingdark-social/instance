@@ -53,6 +53,12 @@ spec:
       cpu: 1000m
       memory: 1Gi
 
+  tolerations:
+    - key: "autoscaler-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
   env:
     # from ExternalSecret mastodon-walg-s3
     - name: AWS_ACCESS_KEY_ID
@@ -75,9 +81,14 @@ spec:
         secretKeyRef:
           name: mastodon-walg-s3
           key: WAL_S3_BUCKET
+    - name: USE_WALG_RESTORE
+      value: true
+    - name: CLONE_USE_WALG_RESTORE
+      value: true
+    - name: AWS_S3_FORCE_PATH_STYLE
+      value: true
+    - name: WAL_BUCKET_SCOPE_PREFIX
+      value: 
     # from ConfigMap mastodon-backup-env
     - name: USE_WALG_BACKUP
-      valueFrom:
-        configMapKeyRef:
-          name: mastodon-backup-env
-          key: USE_WALG_BACKUP
+      value: true

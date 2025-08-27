@@ -16,7 +16,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: backup-health-check
-              image: postgres:17
+              image: ghcr.io/wal-g/wal-g:latest
               envFrom:
                 - secretRef:
                     name: mastodon-walg-s3
@@ -30,24 +30,14 @@ spec:
                   memory: "256Mi"
                   cpu: "200m"
               command:
-                - bash
-                - -c
+                - sh
+                - -ceu
                 - |
-                  # Download and install WAL-G
-                  wget -O /tmp/wal-g.tar.gz "https://github.com/wal-g/wal-g/releases/download/v3.0.2/wal-g-pg-ubuntu-20.04-amd64.tar.gz"
-                  tar -xzf /tmp/wal-g.tar.gz -C /tmp/
-                  chmod +x /tmp/wal-g
-                  
-                  # Check if recent backup exists
-                  echo "Checking backup availability..."
-                  /tmp/wal-g backup-list
-                  
-                  # Verify latest backup is less than 26 hours old
-                  LATEST_BACKUP=$(/tmp/wal-g backup-list --json | head -1 | jq -r '.backup_name // empty')
-                  if [ -z "$LATEST_BACKUP" ]; then
-                    echo "ERROR: No backups found!"
-                    exit 1
-                  fi
-                  
-                  echo "Latest backup: $LATEST_BACKUP"
+                  echo "Checking WAL-G backups..."
+                  wal-g backup-list || exit 1
+                  # Check if at least one backup exists
+                  backup_count=$(wal-g backup-list | awk 'NR>1' | wc -l)
+                  [ "$backup_count" -gt 0 ] || { echo "No backups found"; exit 1; }
+                  latest_backup=$(wal-g backup-list | awk 'NR==2{print $1}')
+                  echo "Latest backup: $latest_backup"
                   echo "Backup health check completed successfully"

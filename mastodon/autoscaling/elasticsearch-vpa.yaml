@@ -13,5 +13,6 @@ spec:
   resourcePolicy:
     containerPolicies:
       - containerName: elasticsearch
+        controlledValues: RequestsOnly
         minAllowed: { cpu: "200m", memory: "768Mi" }
         maxAllowed: { cpu: "1500m", memory: "2Gi" }

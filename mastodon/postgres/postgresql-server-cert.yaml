@@ -13,7 +13,6 @@ spec:
     - mastodon-postgresql.mastodon.svc
     - mastodon-postgresql
     - mastodon-postgresql.mastodon.svc.cluster.local
-    - mastodon-postgresql.mastodon.svc.kube.pc-tips.se
     - mastodon-postgresql-pooler
     - mastodon-postgresql-pooler.mastodon.svc
   duration: 2160h       # 90 days

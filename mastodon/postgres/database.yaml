@@ -32,7 +32,6 @@ spec:
     secretName: mastodon-postgresql-server
     caSecretName: mastodon-postgresql-ca
     caFile: ca.crt
-
   enableConnectionPooler: true
   enableReplicaConnectionPooler: true
   connectionPooler:
@@ -52,15 +51,12 @@ spec:
     limits:
       cpu: 1000m
       memory: 1Gi
-
   tolerations:
     - key: "autoscaler-node"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
-
   env:
-    # from ExternalSecret mastodon-walg-s3
     - name: AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
@@ -82,13 +78,12 @@ spec:
           name: mastodon-walg-s3
           key: WAL_S3_BUCKET
     - name: USE_WALG_RESTORE
-      value: true
+      value: "true"
     - name: CLONE_USE_WALG_RESTORE
-      value: true
+      value: "true"
     - name: AWS_S3_FORCE_PATH_STYLE
-      value: true
+      value: "true"
     - name: WAL_BUCKET_SCOPE_PREFIX
-      value: 
-    # from ConfigMap mastodon-backup-env
+      value: ""
     - name: USE_WALG_BACKUP
-      value: true
+      value: "true"

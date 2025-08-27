@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mastodon-backup-health-check
+  namespace: mastodon
+spec:
+  schedule: "0 5 * * *"  # Check after backup completes
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: backup-health-check
+              image: ghcr.io/wal-g/wal-g:latest
+              envFrom:
+                - secretRef:
+                    name: mastodon-walg-s3
+                - configMapRef:
+                    name: mastodon-backup-env
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "200m"
+              command:
+                - sh
+                - -ceu
+                - |
+                  echo "Checking WAL-G backups..."
+                  wal-g backup-list || exit 1
+                  # Check if at least one backup exists
+                  backup_count=$(wal-g backup-list | awk 'NR>1' | wc -l)
+                  [ "$backup_count" -gt 0 ] || { echo "No backups found"; exit 1; }
+                  latest_backup=$(wal-g backup-list | awk 'NR==2{print $1}')
+                  echo "Latest backup: $latest_backup"
+                  echo "Backup health check completed successfully"

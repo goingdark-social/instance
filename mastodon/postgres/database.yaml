@@ -14,10 +14,19 @@ spec:
       - createdb
   databases:
     mastodon: mastodon
-  enableLogicalBackup: true
-  logicalBackupSchedule: "0 3 * * *"
+  enableLogicalBackup: false
   postgresql:
     version: "17"
+    parameters:
+      archive_timeout: "300"
+  patroni:
+    initdb:
+      encoding: UTF8
+      data-checksums: "true"
+      locale: C
+      lc-collate: C
+      lc-ctype: C
+
   spiloFSGroup: 103
   tls:
     secretName: mastodon-postgresql-server
@@ -42,3 +51,39 @@ spec:
     limits:
       cpu: 1000m
       memory: 1Gi
+  tolerations:
+    - key: "autoscaler-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+  env:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_SECRET_ACCESS_KEY
+    - name: AWS_ENDPOINT
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: AWS_ENDPOINT
+    - name: WAL_S3_BUCKET
+      valueFrom:
+        secretKeyRef:
+          name: mastodon-walg-s3
+          key: WAL_S3_BUCKET
+    - name: USE_WALG_RESTORE
+      value: "true"
+    - name: CLONE_USE_WALG_RESTORE
+      value: "true"
+    - name: AWS_S3_FORCE_PATH_STYLE
+      value: "true"
+    - name: WAL_BUCKET_SCOPE_PREFIX
+      value: ""
+    - name: USE_WALG_BACKUP
+      value: "true"

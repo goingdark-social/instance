@@ -8,4 +8,7 @@ resources:
   - postgresql-server-cert.yaml
   - mastodon-postgresql-ca.yaml
   - externalsecret.yaml
-  - minio-externalsecret.yaml
+  - walg-externalsecret.yaml
+  - pg-amcheck-weekly.yaml
+  - pg-amcheck-monthly.yaml
+  - backup-health.yaml

@@ -13,7 +13,6 @@ spec:
     - mastodon-elastic.mastodon.svc
     - mastodon-elastic
     - mastodon-elastic.mastodon.svc.cluster.local
-    - mastodon-elastic.mastodon.svc.kube.pc-tips.se
     - mastodon-elastic-pooler
     - mastodon-elastic-pooler.mastodon.svc
     - elasticsearch-master

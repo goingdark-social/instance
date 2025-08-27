@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mastodon-pg-amcheck-weekly
+  namespace: mastodon
+spec:
+  schedule: "30 3 * * 1"  # Mondays 03:30
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: amcheck-weekly
+              resources:
+                requests:
+                  memory: "256Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "512Mi"
+                  cpu: "500m"
+              image: postgres:17
+              envFrom:
+                - secretRef:
+                    name: mastodon-db-url        # provides DB_USER, DB_PASS
+                - configMapRef:
+                    name: mastodon-db-env        # provides DB_HOST, DB_PORT, DB_NAME
+              env:
+                - name: PGUSER
+                  valueFrom:
+                    secretKeyRef:
+                      name: mastodon-db-url
+                      key: DB_USER
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mastodon-db-url
+                      key: DB_PASS
+                - name: PGSSLMODE
+                  value: verify-ca
+                - name: PGSSLROOTCERT
+                  value: /etc/postgres/ca.crt
+              volumeMounts:
+                - name: db-ca
+                  mountPath: /etc/postgres/ca.crt
+                  subPath: ca.crt
+              command:
+                - bash
+                - -ceu
+                - |
+                  pg_amcheck \
+                    -h "${DB_HOST}" -p "${DB_PORT}" -d "${DB_NAME}" \
+                    -j 4 -P -v
+          volumes:
+            - name: db-ca
+              secret:
+                secretName: mastodon-postgresql-ca
+                items:
+                  - key: ca.crt
+                    path: ca.crt

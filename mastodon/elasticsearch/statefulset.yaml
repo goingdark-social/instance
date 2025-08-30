@@ -22,6 +22,11 @@ spec:
         app.kubernetes.io/instance: release-name
         app.kubernetes.io/name: elasticsearch
     spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       affinity:
         nodeAffinity: null
         podAffinity: null

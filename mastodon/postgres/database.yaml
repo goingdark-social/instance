@@ -57,7 +57,7 @@ spec:
   env:
     # Backup configuration from ConfigMap converted to direct env vars
     - name: BACKUP_SCHEDULE
-      value: "15 * * * *"  # Every hour at :15
+      value: "0 0 * * *"  # At midnight every day
     - name: USE_WALG_RESTORE
       value: "true"
     - name: CLONE_USE_WALG_RESTORE

@@ -26,7 +26,6 @@ spec:
       locale: C
       lc-collate: C
       lc-ctype: C
-
   spiloFSGroup: 103
   tls:
     secretName: mastodon-postgresql-server
@@ -43,7 +42,6 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
-
   resources:
     requests:
       cpu: 200m
@@ -57,6 +55,34 @@ spec:
       value: "true"
       effect: "NoSchedule"
   env:
+    # Backup configuration from ConfigMap converted to direct env vars
+    - name: BACKUP_SCHEDULE
+      value: "15 * * * *"  # Every hour at :15
+    - name: USE_WALG_RESTORE
+      value: "true"
+    - name: CLONE_USE_WALG_RESTORE
+      value: "true"
+    - name: AWS_S3_FORCE_PATH_STYLE
+      value: "true"
+    - name: WAL_BUCKET_SCOPE_PREFIX
+      value: ""
+    - name: USE_WALG_BACKUP
+      value: "true"
+    - name: WALG_UPLOAD_CONCURRENCY
+      value: "2"
+    - name: WALG_DISK_RATE_LIMIT
+      value: "50MB"
+    - name: WAL_BUCKET_SCOPE_SUFFIX
+      value: ""
+    - name: WALG_DOWNLOAD_FILE_RETRIES
+      value: "15"
+    - name: WALG_BACKUP_COMPRESSION_METHOD
+      value: "lz4"
+    - name: BACKUP_NUM_TO_RETAIN
+      value: "7"
+    - name: WAL_RESTORE_TIMEOUT
+      value: "3600"
+    # Secret references
     - name: AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
@@ -77,13 +103,3 @@ spec:
         secretKeyRef:
           name: mastodon-walg-s3
           key: WAL_S3_BUCKET
-    - name: USE_WALG_RESTORE
-      value: "true"
-    - name: CLONE_USE_WALG_RESTORE
-      value: "true"
-    - name: AWS_S3_FORCE_PATH_STYLE
-      value: "true"
-    - name: WAL_BUCKET_SCOPE_PREFIX
-      value: ""
-    - name: USE_WALG_BACKUP
-      value: "true"

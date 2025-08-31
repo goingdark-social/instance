@@ -14,14 +14,21 @@ spec:
       template:
         spec:
           restartPolicy: Never
+          tolerations:
+            - key: "autoscaler-node"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
           containers:
             - name: backup-health-check
-              image: ghcr.io/wal-g/wal-g:latest
+              image: ghcr.io/zalando/spilo-17:4.0-p2
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: WALG_S3_PREFIX
+                  value: "s3://mastovault/spilo/mastodon-postgresql/wal/17"
               envFrom:
                 - secretRef:
                     name: mastodon-walg-s3
-                - configMapRef:
-                    name: mastodon-backup-env
               resources:
                 requests:
                   memory: "128Mi"

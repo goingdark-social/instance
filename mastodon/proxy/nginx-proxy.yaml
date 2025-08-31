@@ -134,7 +134,7 @@ metadata:
   labels:
     app: mastodon-s3-proxy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mastodon-s3-proxy

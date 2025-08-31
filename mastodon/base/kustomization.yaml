@@ -30,21 +30,6 @@ configMapGenerator:
       - DATABASE_TIMEOUT=60
       - STREAMING_DATABASE_TIMEOUT=10
 
-  - name: mastodon-backup-env
-    literals:
-      - USE_WALG_BACKUP=true
-      - USE_WALG_RESTORE=false
-      - CLONE_USE_WALG_RESTORE=false
-      - BACKUP_SCHEDULE=0 4 * * *
-      - AWS_S3_FORCE_PATH_STYLE=true
-      - WALG_UPLOAD_CONCURRENCY=2
-      - WALG_DISK_RATE_LIMIT=50MB
-      - WAL_BUCKET_SCOPE_PREFIX=
-      - WAL_BUCKET_SCOPE_SUFFIX=
-      - WALG_DOWNLOAD_FILE_RETRIES=15
-      - WALG_BACKUP_COMPRESSION_METHOD=lz4
-      - BACKUP_NUM_TO_RETAIN=7
-
   - name: mastodon-cache-env
     literals:
       - REDIS_HOST=mastodon-redis-master

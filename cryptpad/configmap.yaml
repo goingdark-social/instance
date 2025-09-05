@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cryptpad-config
+  namespace: cryptpad
+data:
+  config.js: |
+    module.exports = {
+      adminKeys: [],
+      adminEmail: 'admin@goingdark.social',
+      allowSubscriptions: false,
+      archivePath: './data/archive',
+      blobPath: './data/blob',
+      blobStagingPath: './data/blobstage',
+      blockPath: './data/block',
+      filePath: './data/store',
+      httpAddress: '0.0.0.0',
+      httpPort: 3000,
+      httpSafeOrigin: 'https://cryptpad.goingdark.social/',
+      httpUnsafeOrigin: 'https://pad.goingdark.social/',
+      logFeedback: false,
+      logLevel: 'info',
+      logToStdout: true,
+      noSubscriptionButton: true,
+      pinPath: './data/pins',
+      removeDonateButton: true,
+      taskPath: './data/tasks',
+      verbose: false,
+    };

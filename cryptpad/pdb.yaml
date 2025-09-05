@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cryptpad
+  namespace: cryptpad
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: cryptpad

@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cryptpad
+  namespace: cryptpad
+spec:
+  selector:
+    matchLabels:
+      app: cryptpad
+  template:
+    metadata:
+      labels:
+        app: cryptpad
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: config
+          configMap:
+            name: cryptpad-config
+        - name: cryptpad
+          persistentVolumeClaim:
+            claimName: cryptpad
+      containers:
+        - name: cryptpad
+          image: docker.io/cryptpad/cryptpad@sha256:0667fd73d03f92e2930ebaf03dfa01028a3f923ec2734d2603832114fd52a197
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: config
+              mountPath: /cryptpad/config
+            - name: cryptpad
+              mountPath: /cryptpad/data

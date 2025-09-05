@@ -31,7 +31,7 @@ spec:
                     name: mastodon-walg-s3
               resources:
                 requests:
-                  memory: "128Mi"
+                  memory: "50Mi"
                   cpu: "100m"
                 limits:
                   memory: "256Mi"

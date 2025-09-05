@@ -15,10 +15,12 @@ spec:
   databases:
     mastodon: mastodon
   enableLogicalBackup: false
+
   postgresql:
     version: "17"
     parameters:
       archive_timeout: "300"
+
   patroni:
     initdb:
       encoding: UTF8
@@ -26,11 +28,14 @@ spec:
       locale: C
       lc-collate: C
       lc-ctype: C
+
   spiloFSGroup: 103
+
   tls:
     secretName: mastodon-postgresql-server
     caSecretName: mastodon-postgresql-ca
     caFile: ca.crt
+
   enableConnectionPooler: true
   enableReplicaConnectionPooler: true
   connectionPooler:
@@ -42,6 +47,7 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
+
   resources:
     requests:
       cpu: 200m
@@ -49,19 +55,20 @@ spec:
     limits:
       cpu: 1000m
       memory: 1Gi
+
   tolerations:
     - key: "autoscaler-node"
       operator: "Equal"
       value: "true"
       effect: "NoSchedule"
+
   env:
-    # Backup configuration from ConfigMap converted to direct env vars
     - name: BACKUP_SCHEDULE
-      value: "0 0 * * *"  # At midnight every day
+      value: "0 0 * * *"
     - name: USE_WALG_RESTORE
-      value: "true"
+      value: "false"
     - name: CLONE_USE_WALG_RESTORE
-      value: "true"
+      value: "false"
     - name: AWS_S3_FORCE_PATH_STYLE
       value: "true"
     - name: WAL_BUCKET_SCOPE_PREFIX
@@ -82,7 +89,6 @@ spec:
       value: "7"
     - name: WAL_RESTORE_TIMEOUT
       value: "3600"
-    # Secret references
     - name: AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:

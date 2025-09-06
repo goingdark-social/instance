@@ -9,7 +9,7 @@ spec:
     kind: StatefulSet
     name: elasticsearch-master
   updatePolicy:
-    updateMode: "Initial"
+    updateMode: "Auto"
   resourcePolicy:
     containerPolicies:
       - containerName: elasticsearch

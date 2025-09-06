@@ -90,7 +90,7 @@ configMapGenerator:
   - name: mastodon-smtp-env
     literals:
       - SMTP_DELIVERY_METHOD=smtp
-      - SMTP_AUTH_METHOD=plain
+      - SMTP_AUTH_METHOD=login
       - SMTP_SSL=false
       - SMTP_TLS=false
       - SMTP_ENABLE_STARTTLS_AUTO=true

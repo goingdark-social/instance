@@ -6,6 +6,15 @@ metadata:
 spec:
   template:
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app: mastodon-streaming
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

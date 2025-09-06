@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: mastodon
+
 resources:
   - database.yaml
   - db-secrets.yaml
@@ -12,3 +13,6 @@ resources:
   - pg-amcheck-weekly.yaml
   - pg-amcheck-monthly.yaml
   - backup-health.yaml
+
+patches:
+- path: postgres-priority-patch.yaml

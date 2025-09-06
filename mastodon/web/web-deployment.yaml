@@ -6,7 +6,7 @@ metadata:
   labels:
     app: mastodon-web
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mastodon-web
@@ -95,7 +95,7 @@ spec:
             initialDelaySeconds: 0
             periodSeconds: 5
             timeoutSeconds: 2
-            failureThreshold: 24
+            failureThreshold: 60
           resources:
             requests:
               cpu: "500m"

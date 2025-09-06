@@ -1,18 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mastodon-streaming
+  name: mastodon-web
   namespace: mastodon
 spec:
   template:
     spec:
-      topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: ScheduleAnyway
-        labelSelector:
-          matchLabels:
-            app: mastodon-streaming
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -21,4 +14,11 @@ spec:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchLabels:
-                  app: mastodon-streaming
+                  app: mastodon-web
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: mastodon-web

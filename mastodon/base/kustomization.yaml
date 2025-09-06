@@ -91,9 +91,10 @@ configMapGenerator:
     literals:
       - SMTP_DELIVERY_METHOD=smtp
       - SMTP_AUTH_METHOD=login
-      - SMTP_SSL=true
+      - SMTP_SSL=false
       - SMTP_TLS=false
-      - SMTP_ENABLE_STARTTLS_AUTO=false
+      - SMTP_ENABLE_STARTTLS_AUTO=true
+      - SMTP_OPENSSL_VERIFY_MODE=peer
 
 resources:
   - namespace.yaml

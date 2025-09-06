@@ -1,4 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
   - sidekiq-deployment.yaml
+  - sidekiq-vpa.yaml
+
+patches:
+- path: sidekiq-priority-patch.yaml

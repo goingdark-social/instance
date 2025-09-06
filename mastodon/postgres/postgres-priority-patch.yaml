@@ -4,6 +4,4 @@ metadata:
   name: mastodon-postgresql
   namespace: mastodon
 spec:
-  template:
-    spec:
-      priorityClassName: mastodon-critical
+  podPriorityClassName: mastodon-critical

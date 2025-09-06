@@ -49,8 +49,8 @@ spec:
           value: "9200"
         - name: ELASTICSEARCH_CLUSTER_NAME
           value: elastic
-        - name: ELASTICSEARCH_HEAP_SIZE
-          value: 512m
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx1g"
         - name: ELASTICSEARCH_ENABLE_SECURITY
           value: "true"
         - name: ELASTICSEARCH_PASSWORD_FILE
@@ -157,8 +157,8 @@ spec:
             cpu: 50m
             memory: 64Mi
           requests:
-            cpu: 25m
-            memory: 32Mi
+            cpu: 100m
+            memory: 128Mi
             ephemeral-storage: 50Mi
         securityContext:
           privileged: true
@@ -184,7 +184,7 @@ spec:
             memory: 512Mi
           requests:
             memory: 256Mi
-            ephemeral-storage: 50Mi
+            ephemeral-storage: 100Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -236,28 +236,3 @@ spec:
       resources:
         requests:
           storage: 8Gi
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: elasticsearch-master
-  namespace: mastodon
-spec:
-  maxUnavailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: master
-      app.kubernetes.io/instance: release-name
-      app.kubernetes.io/name: elasticsearch
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: kibana
-  namespace: mastodon
-spec:
-  maxUnavailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: release-name
-      app.kubernetes.io/name: kibana

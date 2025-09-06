@@ -5,6 +5,7 @@ resources:
   - streaming-deployment.yaml
   - svc-streaming.yaml
   - streaming-vpa.yaml
+  - streaming-hpa.yaml
 
 patches:
 - path: streaming-priority-patch.yaml

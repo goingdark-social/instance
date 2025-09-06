@@ -19,11 +19,16 @@ data:
       httpSafeOrigin: 'https://cryptpad.goingdark.social/',
       httpUnsafeOrigin: 'https://pad.goingdark.social/',
       logFeedback: false,
-      logLevel: 'info',
+      logLevel: 'warn',
       logToStdout: true,
       noSubscriptionButton: true,
       pinPath: './data/pins',
       removeDonateButton: true,
       taskPath: './data/tasks',
       verbose: false,
+      // Performance optimizations
+      maxWorkers: 4,
+      inactiveTime: 90,
+      archiveRetentionTime: 15,
+      accountRetentionTime: 365,
     };

@@ -7,8 +7,13 @@ resources:
   - migrate-job.yaml
   - svc.yaml
   - web-deployment.yaml
+  - web-hpa.yaml
+  - web-vpa.yaml
+  - web-pdb.yaml
 
 patches:
+- path: web-priority-patch.yaml
+- path: web-spread-patch.yaml
 - target:
     group: batch
     version: v1

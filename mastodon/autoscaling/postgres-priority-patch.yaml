@@ -1,7 +1,0 @@
-apiVersion: "acid.zalan.do/v1"
-kind: postgresql
-metadata:
-  name: mastodon-postgresql
-  namespace: mastodon
-spec:
-  podPriorityClassName: mastodon-critical

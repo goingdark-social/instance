@@ -1,18 +1,18 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: mastodon-elasticsearch-vpa
+  name: mastodon-streaming-vpa
   namespace: mastodon
 spec:
   targetRef:
     apiVersion: apps/v1
-    kind: StatefulSet
-    name: elasticsearch-master
+    kind: Deployment
+    name: mastodon-streaming
   updatePolicy:
     updateMode: "Auto"
   resourcePolicy:
     containerPolicies:
-      - containerName: elasticsearch
+      - containerName: streaming
         controlledValues: RequestsOnly
-        minAllowed: { cpu: "200m", memory: "768Mi" }
-        maxAllowed: { cpu: "1500m", memory: "2Gi" }
+        minAllowed: { cpu: "50m", memory: "64Mi" }
+        maxAllowed: { cpu: "300m", memory: "512Mi" }

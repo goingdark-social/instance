@@ -4,7 +4,7 @@ metadata:
   name: mastodon-streaming-pdb
   namespace: mastodon
 spec:
-  minAvailable: 1
+  maxUnavailable: 1
   selector:
     matchLabels:
       app: mastodon-streaming

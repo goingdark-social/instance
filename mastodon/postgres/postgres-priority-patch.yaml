@@ -1,0 +1,9 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: mastodon-postgresql
+  namespace: mastodon
+spec:
+  template:
+    spec:
+      priorityClassName: mastodon-critical

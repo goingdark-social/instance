@@ -6,7 +6,7 @@ resources:
 - es-cert.yaml
 - externalsecret.yaml
 - httproute-es.yaml
-- kibana.yml
+- elasticsearch-vpa.yaml
 - networkpolicy.yaml
 - pvc-es.yaml
 - service.yaml

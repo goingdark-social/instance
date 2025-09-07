@@ -35,8 +35,20 @@ spec:
         app.kubernetes.io/version: 8.2.0
         helm.sh/chart: redis-22.0.1
     spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       affinity:
-        nodeAffinity: null
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: "autoscaler-node"
+                operator: NotIn
+                values: ["true"]
         podAffinity: null
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

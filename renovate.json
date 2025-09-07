@@ -1,17 +1,26 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "enabledManagers": ["kubernetes", "kustomize", "helm-values"],
-
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "kubernetes",
+    "kustomize",
+    "helm-values"
+  ],
   "kustomize": {
-    "fileMatch": ["(^|/)kustomization\\.ya?ml(\\.j2)?$"]
+    "managerFilePatterns": [
+      "/(^|/)kustomization\\.ya?ml(\\.j2)?$/"
+    ]
   },
-
   "kubernetes": {
-    "fileMatch": ["(^|/).+\\.(ya?ml)$"]
+    "managerFilePatterns": [
+      "/(^|/).+\\.(ya?ml)$/"
+    ]
   },
-
   "helm-values": {
-    "fileMatch": ["(^|/).*/values(-.*)?\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/(^|/).*/values(-.*)?\\.ya?ml$/"
+    ]
   }
 }

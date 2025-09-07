@@ -1,6 +1,99 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":rebaseStalePrs",
+    ":enablePreCommit",
+    "docker:enableMajor",
+    ":automergePatch",
+    ":automergeMinor",
+    "mergeConfidence:all-badges"
+  ],
+  "dependencyDashboard": true,
+
+  "kustomize": {
+    "managerFilePatterns": ["/(^|/)kustomization\\.ya?ml(\\.j2)?$/"]
+  },
+
+  "helm-values": {
+    "managerFilePatterns": [
+      "/(^|/).+/(values|values-.*)\\.ya?ml$"
+    ]
+  },
+
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/(^|/).+\\.(yaml|yml)$"
+    ]
+  },
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.tf$/",
+        "/\\.tftpl$/",
+        "/\\.ya?ml$/",
+        "/\\.sh$/"
+      ],
+      "matchStrings": [
+        "(?<currentValue>[\\w+\\.\\-]*)['\",;]*\\s*#\\s?renovate: (?<datasource>\\S+)=(?<depName>\\S+)\\s?(registry=(?<registryUrl>\\S+))?\\s?(versioning=(?<versioning>\\S+))?"
+      ]
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/).+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "name:\\s*mastodon-migrate-(?<currentValue>[\\w.-]+)\\s*#\\s*renovate:\\s*mastodon-migrate"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "ghcr.io/glitch-soc/mastodon"
+    }
+  ],
+
+  "packageRules": [
+    {
+      "groupName": "Media containers",
+      "matchPackageNames": ["/ghcr.io/onedr0p/.*/", "/ghcr.io/jellyfin/.*/"]
+    },
+    {
+      "groupName": "Netbird",
+      "matchPackageNames": ["/docker.io/netbirdio/.*/"]
+    },
+    {
+      "groupName": "Intel Device Plugins",
+      "matchPackageNames": ["/intel-device-plugins/.*/"]
+    },
+    {
+      "groupName": "Cilium",
+      "automerge": true,
+      "matchPackageNames": ["/cilium/.*/"]
+    },
+    {
+      "matchManagers": ["terraform"],
+      "matchDepTypes": ["provider", "required_provider"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["helm-values", "helm-requirements"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "groupName": "external-secrets",
+      "matchPackageNames": ["/^ghcr.io/external-secrets//"]
+    },
+    {
+      "groupName": "Mastodon",
+      "automerge": false,
+      "matchPackageNames": ["/ghcr.io/glitch-soc/mastodon/"]
+    },
+    {
+      "groupName": "all dependencies",
+      "matchPackageNames": ["*"]
+    }
   ]
 }

@@ -9,10 +9,10 @@ spec:
     kind: Deployment
     name: mastodon-streaming
   updatePolicy:
-    updateMode: "Auto"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
       - containerName: streaming
         controlledValues: RequestsOnly
         minAllowed: { cpu: "150m", memory: "384Mi" }
-        maxAllowed: { cpu: "1000m", memory: "1Gi" }
+        maxAllowed: { cpu: "1000m", memory: "768Mi" }

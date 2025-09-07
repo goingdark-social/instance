@@ -73,11 +73,10 @@ spec:
             periodSeconds: 30
           resources:
             requests:
-              cpu: "500m"
+              cpu: "400m"
               memory: "768Mi"
             limits:
-              cpu: "1500m"
-              memory: "2Gi"
+              memory: "1Gi"
           securityContext:
             runAsNonRoot: true
             runAsUser: 991

@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: mastodon-sidekiq
   updatePolicy:
-    updateMode: "Auto"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
       - containerName: sidekiq

@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - sidekiq-deployment.yaml
   - sidekiq-vpa.yaml
+  - sidekiq-hpa.yaml
+  - sidekiq-pdb.yaml
 
 patches:
 - path: sidekiq-priority-patch.yaml

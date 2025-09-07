@@ -29,7 +29,7 @@ spec:
             claimName: cryptpad
       containers:
         - name: cryptpad
-          image: docker.io/cryptpad/cryptpad@sha256:0667fd73d03f92e2930ebaf03dfa01028a3f923ec2734d2603832114fd52a197
+          image: docker.io/cryptpad/cryptpad:version-2025.6.0
           env:
             - name: CPAD_CONF
               value: /cryptpad/config/config.js

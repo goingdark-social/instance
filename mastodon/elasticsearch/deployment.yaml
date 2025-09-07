@@ -19,7 +19,14 @@ spec:
         app.kubernetes.io/component: server
     spec:
       affinity:
-        nodeAffinity: null
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: "autoscaler-node"
+                operator: NotIn
+                values: ["true"]
         podAffinity: null
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

@@ -27,7 +27,14 @@ spec:
           value: "true"
           effect: "NoSchedule"
       affinity:
-        nodeAffinity: null
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: "autoscaler-node"
+                operator: NotIn
+                values: ["true"]
         podAffinity: null
         podAntiAffinity: null
       automountServiceAccountToken: false

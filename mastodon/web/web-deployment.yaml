@@ -60,6 +60,8 @@ spec:
                 name: mastodon-storage-env
             - configMapRef:
                 name: mastodon-smtp-env
+            - configMapRef:
+                name: mastodon-translate-env
           env:
             - name: DB_SSLMODE
               value: verify-ca

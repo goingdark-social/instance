@@ -15,6 +15,11 @@ spec:
       labels:
         app: libretranslate
     spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1203
@@ -30,22 +35,6 @@ spec:
         - name: local
           persistentVolumeClaim:
             claimName: libretranslate-local
-      initContainers:
-        - name: preload-models
-          image: libretranslate/libretranslate:v1.7.3
-          command: ["/bin/sh","-ceu"]
-          args:
-            - >
-              set -o pipefail;
-              for i in `/app/venv/bin/argospm list`; do
-                /app/venv/bin/argospm install "$$i";
-              done
-          volumeMounts:
-            - name: local
-              mountPath: /home/libretranslate/.local
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities: { drop: ["ALL"] }
       containers:
         - name: libretranslate
           image: libretranslate/libretranslate:v1.7.3

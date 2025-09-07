@@ -12,5 +12,4 @@ data:
   LT_FRONTEND_TIMEOUT: "2000"
   LT_REQ_LIMIT: "0"
   LT_CHAR_LIMIT: "0"
-  LT_API_KEYS_DB_PATH: "/app/db/api_keys.db"
   LT_API_KEYS: "false"

@@ -14,5 +14,5 @@ spec:
     containerPolicies:
       - containerName: streaming
         controlledValues: RequestsOnly
-        minAllowed: { cpu: "200m", memory: "256Mi" }
+        minAllowed: { cpu: "150m", memory: "384Mi" }
         maxAllowed: { cpu: "1000m", memory: "1Gi" }

@@ -71,10 +71,9 @@ spec:
             periodSeconds: 15
           resources:
             requests:
-              cpu: "200m"
-              memory: "512Mi"
+              cpu: "150m"
+              memory: "384Mi"
             limits:
-              cpu: "1"
               memory: "1.5Gi"
       volumes:
         - name: db-ca

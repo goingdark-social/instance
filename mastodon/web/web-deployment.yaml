@@ -98,10 +98,9 @@ spec:
             failureThreshold: 60
           resources:
             requests:
-              cpu: "500m"
+              cpu: "300m"
               memory: "768Mi"
             limits:
-              cpu: "1500m"
               memory: "2Gi"
       volumes:
         - name: db-ca

@@ -21,7 +21,7 @@ configMapGenerator:
       - DB_NAME=mastodon
       - DB_SSLMODE=require
       - DB_SSLROOTCERT=/opt/mastodon/.postgresql/root.crt
-      - DB_POOL=15
+      - DB_POOL=10
       - REPLICA_DB_HOST=mastodon-postgresql-repl
       - REPLICA_DB_PORT=5432
       - REPLICA_DB_NAME=mastodon
@@ -39,7 +39,7 @@ configMapGenerator:
       - CACHE_REDIS_URL=redis://mastodon-redis-master:6379/2
       - STREAMING_REDIS_URL=redis://mastodon-redis-master:6379/3
       - QUERY_CACHE_REDIS_URL=redis://mastodon-redis-master:6379/4
-      - SIDEKIQ_CONCURRENCY=15
+      - SIDEKIQ_CONCURRENCY=10
 
   - name: mastodon-search-env
     literals:

@@ -1,28 +1,22 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: mastodon-web-hpa
+  name: mastodon-sidekiq-hpa
   namespace: mastodon
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: mastodon-web
+    name: mastodon-sidekiq
   minReplicas: 1
-  maxReplicas: 20
+  maxReplicas: 12
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 70
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: 75
+          averageUtilization: 65
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 60
@@ -31,7 +25,7 @@ spec:
           value: 100
           periodSeconds: 60
         - type: Pods
-          value: 10
+          value: 6
           periodSeconds: 60
       selectPolicy: Max
     scaleDown:

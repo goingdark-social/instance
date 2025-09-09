@@ -6,7 +6,7 @@ metadata:
   labels:
     app: mastodon-web
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mastodon-web
@@ -99,7 +99,7 @@ spec:
           resources:
             requests:
               cpu: "300m"
-              memory: "512Mi"
+              memory: "700Mi"
             limits:
               memory: "1Gi"
       volumes:

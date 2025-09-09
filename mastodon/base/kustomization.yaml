@@ -21,7 +21,7 @@ configMapGenerator:
       - DB_NAME=mastodon
       - DB_SSLMODE=require
       - DB_SSLROOTCERT=/opt/mastodon/.postgresql/root.crt
-      - DB_POOL=6
+      - DB_POOL=5
       - REPLICA_DB_HOST=mastodon-postgresql-repl
       - REPLICA_DB_PORT=5432
       - REPLICA_DB_NAME=mastodon
@@ -39,7 +39,7 @@ configMapGenerator:
       - CACHE_REDIS_URL=redis://mastodon-redis-master:6379/2
       - STREAMING_REDIS_URL=redis://mastodon-redis-master:6379/3
       - QUERY_CACHE_REDIS_URL=redis://mastodon-redis-master:6379/4
-      - SIDEKIQ_CONCURRENCY=10
+      - SIDEKIQ_CONCURRENCY=6
 
   - name: mastodon-search-env
     literals:
@@ -72,8 +72,8 @@ configMapGenerator:
       - PORT=3000
       - BIND=0.0.0.0
       - RAILS_SERVE_STATIC_FILES=true
-      - WEB_CONCURRENCY=1
-      - MAX_THREADS=4
+      - WEB_CONCURRENCY=2
+      - MAX_THREADS=5
       - STREAMING_API_BASE_URL=wss://goingdark.social
       - STREAMING_PORT=4000
 

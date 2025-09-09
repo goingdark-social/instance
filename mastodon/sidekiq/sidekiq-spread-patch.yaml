@@ -14,14 +14,6 @@ spec:
               topologyKey: kubernetes.io/hostname
               labelSelector:
                 matchLabels: { app: mastodon-sidekiq }
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: "autoscaler-node"
-                operator: NotIn
-                values: ["true"]
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

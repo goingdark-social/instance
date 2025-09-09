@@ -15,14 +15,6 @@ spec:
               labelSelector:
                 matchLabels:
                   app: mastodon-web
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: "autoscaler-node"
-                operator: NotIn
-                values: ["true"]
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname

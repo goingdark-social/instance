@@ -9,3 +9,4 @@ resources:
 
 patches:
 - path: sidekiq-priority-patch.yaml
+- path: sidekiq-spread-patch.yaml

@@ -10,6 +10,11 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      tolerations:
+      - key: "autoscaler-node"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
       containers:
         - name: migrate
           image: ghcr.io/glitch-soc/mastodon:v4.4.3

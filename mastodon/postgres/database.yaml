@@ -8,12 +8,15 @@ spec:
   volume:
     size: 10Gi
   numberOfInstances: 2
+
   users:
     mastodon:
       - superuser
       - createdb
+
   databases:
     mastodon: mastodon
+
   enableLogicalBackup: false
 
   postgresql:
@@ -36,17 +39,19 @@ spec:
     caSecretName: mastodon-postgresql-ca
     caFile: ca.crt
 
+  # Connection pooler — correct Zalando syntax
   enableConnectionPooler: true
   enableReplicaConnectionPooler: true
   connectionPooler:
     numberOfInstances: 2
+    mode: "session"
     resources:
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 75m
+        memory: 96Mi
       limits:
-        cpu: 500m
-        memory: 512Mi
+        cpu: 75m
+        memory: 96Mi
 
   resources:
     requests:
@@ -56,6 +61,7 @@ spec:
       cpu: 1000m
       memory: 1Gi
 
+  # Keep Postgres able to run on both normal workers and autoscaler nodes
   tolerations:
     - key: "autoscaler-node"
       operator: "Equal"

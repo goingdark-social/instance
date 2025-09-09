@@ -15,7 +15,6 @@ spec:
   serviceName: elasticsearch-master
   template:
     metadata:
-      annotations: null
       labels:
         app.kubernetes.io/component: master
         app.kubernetes.io/instance: release-name
@@ -26,17 +25,17 @@ spec:
           operator: "Equal"
           value: "true"
           effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: "autoscaler-node"
-                operator: NotIn
-                values: ["true"]
-        podAffinity: null
-        podAntiAffinity: null
+      # affinity:
+      #   nodeAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 100
+      #       preference:
+      #         matchExpressions:
+      #         - key: "autoscaler-node"
+      #           operator: NotIn
+      #           values: ["true"]
+      #   podAffinity: null
+      #   podAntiAffinity: null
       automountServiceAccountToken: false
       containers:
       - env:
@@ -160,10 +159,10 @@ spec:
         imagePullPolicy: IfNotPresent
         name: sysctl
         resources:
-          limits:
+          requests:
             cpu: 50m
             memory: 64Mi
-          requests:
+          limits:
             cpu: 100m
             memory: 128Mi
             ephemeral-storage: 50Mi
@@ -238,8 +237,9 @@ spec:
     metadata:
       name: data
     spec:
-      accessModes:
-      - ReadWriteOnce
+      storageClassName: hcloud-volumes-encrypted-xfs
+      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 8Gi
+          storage: 10Gi
+

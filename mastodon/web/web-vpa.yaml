@@ -14,5 +14,5 @@ spec:
     containerPolicies:
       - containerName: web
         controlledValues: RequestsOnly
-        minAllowed: { cpu: "100m", memory: "256Mi" }
-        maxAllowed: { cpu: "1000m", memory: "1Gi" }
+        minAllowed: { cpu: "100m", memory: "512Mi" }
+        maxAllowed: { cpu: "1000m", memory: "1.5Gi" }

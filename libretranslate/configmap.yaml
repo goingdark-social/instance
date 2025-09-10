@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: libretranslate-env
+  namespace: libretranslate
+data:
+  LT_UPDATE_MODELS: "false"
+  LT_SSL: "false"
+  LT_SUGGESTIONS: "false"
+  LT_METRICS: "true"
+  LT_THREADS: "4"
+  LT_FRONTEND_TIMEOUT: "2000"
+  LT_REQ_LIMIT: "0"
+  LT_CHAR_LIMIT: "0"
+  LT_API_KEYS: "false"

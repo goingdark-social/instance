@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: libretranslate
+  namespace: libretranslate
+spec:
+  podSelector:
+    matchLabels:
+      app: libretranslate
+  policyTypes: [ "Ingress", "Egress" ]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: mastodon
+      ports:
+        - port: 5000
+  egress:
+    - {}

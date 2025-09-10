@@ -14,3 +14,7 @@ Pinning the version keeps the bot predictable; update the tag when you deploy a 
 ## Cryptpad
 
 Cryptpad lets people collaborate on documents without an account. It's available at `https://cryptpad.goingdark.social` and `https://pad.goingdark.social`. Everything lives on our server; if it goes down, your pads do too.
+
+## LibreTranslate
+
+LibreTranslate runs inside the cluster and serves translations for Mastodon. The service isn't exposed outside the cluster and keeps its models on a persistent volume so restarts are quick.

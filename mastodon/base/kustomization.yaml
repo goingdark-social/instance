@@ -72,8 +72,8 @@ configMapGenerator:
       - PORT=3000
       - BIND=0.0.0.0
       - RAILS_SERVE_STATIC_FILES=true
-      - WEB_CONCURRENCY=2
-      - MAX_THREADS=5
+      - WEB_CONCURRENCY=5
+      - MAX_THREADS=4
       - STREAMING_API_BASE_URL=wss://goingdark.social
       - STREAMING_PORT=4000
 

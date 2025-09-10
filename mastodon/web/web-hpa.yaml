@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: mastodon-web
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 3
   metrics:
     - type: Resource
       resource:
@@ -22,18 +22,18 @@ spec:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 75
+          averageUtilization: 90
   behavior:
     scaleUp:
-      stabilizationWindowSeconds: 120
+      stabilizationWindowSeconds: 300   # 5 min before new scale-up
       policies:
-        - type: Percent
-          value: 50
-          periodSeconds: 60
+        - type: Pods
+          value: 1
+          periodSeconds: 120
       selectPolicy: Max
     scaleDown:
-      stabilizationWindowSeconds: 600
+      stabilizationWindowSeconds: 900   # keep pods alive 15 min before scaling down
       policies:
-        - type: Percent
-          value: 50
-          periodSeconds: 60
+        - type: Pods
+          value: 1
+          periodSeconds: 300

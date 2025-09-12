@@ -25,23 +25,18 @@ data:
       infosec.exchange:
         limit: 5
       mastodon.social:
-        limit: 5
+        limit: 4
       mas.to:
         limit: 5
-      chaos.social:
-        limit: 5
       fosstodon.org:
-        limit: 4
+        limit: 6
       floss.social:
         limit: 4
       ioc.exchange:
         limit: 3
       mstdn.social:
         limit: 2
-      social.tchncs.de:
-        limit: 2
-      norden.social:
-        limit: 2
+        
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the
     # server that marked it as a popular post.
@@ -53,3 +48,14 @@ data:
 
     daily_public_cap: 96
     per_hour_public_cap: 5
+    seen_cache_size: 6000
+    hashtag_scores:
+      homelab: 20
+      selfhosted: 15
+      privacy: 10
+      security: 10
+      cybersecurity: 10
+      kubernetes: 15
+      docker: 15
+    min_reblogs: 10
+    min_favourites: 10

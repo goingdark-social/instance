@@ -10,3 +10,4 @@ resources:
 - streaming
 - elasticsearch
 - networking
+- observability

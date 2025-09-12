@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mastodon-servicemonitor
+  namespace: observability
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - mastodon
+  selector:
+    matchLabels:
+      app: mastodon-web
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s

@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: mastodon-prometheus
+  namespace: observability
+spec:
+  replicas: 1
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector: {}
+  resources:
+    requests:
+      memory: 400Mi
+      cpu: 200m
+    limits:
+      memory: 1Gi
+      cpu: 500m
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

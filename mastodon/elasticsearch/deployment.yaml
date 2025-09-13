@@ -150,7 +150,7 @@ spec:
           readOnly: true
       initContainers:
       - name: verify-kibana-env
-        image: curlimages/curl:8.15.0
+        image: curlimages/curl:8.16.0
         imagePullPolicy: IfNotPresent
         command: ["sh","-c","[ -n \"$KIBANA_ENCRYPTION_KEY\" ] && [ -n \"$KIBANA_SERVICE_ACCOUNT_TOKEN\" ] || { echo 'Kibana required env not ready'; exit 1; }"]
         env:

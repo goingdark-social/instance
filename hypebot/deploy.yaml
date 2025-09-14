@@ -21,7 +21,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: hype
-          image: ghcr.io/goingdark-social/hypebot:v0.3.7
+          image: ghcr.io/goingdark-social/hypebot:v1.3.8
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -46,6 +46,8 @@ spec:
               mountPath: /app/config/config.yaml
               subPath: config.yaml
               readOnly: true
+            - name: logs
+              mountPath: /app/logs
           command: ["/bin/sh"]
           args: ["-c", "/entrypoint.sh"]
       volumes:
@@ -56,3 +58,5 @@ spec:
         - name: app-config
           configMap:
             name: hypebot-config
+        - name: logs
+          emptyDir: {}

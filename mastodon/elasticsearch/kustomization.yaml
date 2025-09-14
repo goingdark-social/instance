@@ -5,7 +5,6 @@ resources:
 - deployment.yaml
 - es-cert.yaml
 - externalsecret.yaml
-- httproute-es.yaml
 - elasticsearch-vpa.yaml
 - networkpolicy.yaml
 - pvc-es.yaml

@@ -15,9 +15,17 @@ spec:
       labels:
         app: hypebot
     spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: hype
           image: ghcr.io/goingdark-social/hypebot:v0.3.7
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           env:
             - name: BOT_SERVER
               valueFrom:

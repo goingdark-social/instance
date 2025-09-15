@@ -36,7 +36,6 @@ data:
         limit: 3
       mstdn.social:
         limit: 2
-        
     # Posts originating from filtered instances will never be reposted.
     # The filter checks for the instance of the original posting account, not the
     # server that marked it as a popular post.
@@ -59,3 +58,8 @@ data:
       docker: 15
     min_reblogs: 10
     min_favourites: 10
+
+    # Debug logging configuration
+    debug_decisions: true
+    log_level: "DEBUG"
+    logfile_path: "/app/logs/hypebot.log"

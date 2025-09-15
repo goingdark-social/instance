@@ -21,7 +21,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: hype
-          image: ghcr.io/goingdark-social/hypebot:v0.3.12
+          image: ghcr.io/goingdark-social/hypebot:v0.3.17
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

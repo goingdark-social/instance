@@ -24,6 +24,7 @@ spec:
           image: ghcr.io/goingdark-social/hypebot:v0.3.10
           securityContext:
             allowPrivilegeEscalation: false
+            runAsUser: 65534
             capabilities:
               drop: ["ALL"]
           env:

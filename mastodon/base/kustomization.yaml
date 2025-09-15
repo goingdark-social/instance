@@ -66,7 +66,7 @@ configMapGenerator:
       - FETCH_REPLIES_MAX_SINGLE=500
       - FETCH_REPLIES_MAX_PAGES=500
       - IP_RETENTION_PERIOD=15552000
-      - DEFAULT_LOCALE=end
+      - DEFAULT_LOCALE=en
       - FORCE_DEFAULT_LOCALE=true
 
   - name: mastodon-network-env

@@ -98,6 +98,12 @@ configMapGenerator:
       - SMTP_ENABLE_STARTTLS_AUTO=true
       - SMTP_OPENSSL_VERIFY_MODE=peer
 
+  - name: mastodon-translate-env
+    literals:
+      - DEFAULT_LOCALE=en
+      - ALLOWED_PRIVATE_ADDRESSES=127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+      - LIBRE_TRANSLATE_ENDPOINT=http://libretranslate.libretranslate.svc:5000
+
 resources:
   - namespace.yaml
   - secretstore.yaml

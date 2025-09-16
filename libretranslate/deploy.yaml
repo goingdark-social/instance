@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: libretranslate
+  namespace: libretranslate
+  labels:
+    app: libretranslate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: libretranslate
+  template:
+    metadata:
+      labels:
+        app: libretranslate
+    spec:
+      tolerations:
+        - key: "autoscaler-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1203
+        runAsGroup: 1203
+        fsGroup: 1203
+        fsGroupChangePolicy: Always
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: keys
+          persistentVolumeClaim:
+            claimName: libretranslate-keys
+        - name: local
+          persistentVolumeClaim:
+            claimName: libretranslate-local
+      containers:
+        - name: libretranslate
+          image: libretranslate/libretranslate:v1.7.3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+              name: http
+          envFrom:
+            - configMapRef:
+                name: libretranslate-env
+          volumeMounts:
+            - name: keys
+              mountPath: /app/db
+            - name: local
+              mountPath: /home/libretranslate/.local
+          livenessProbe:
+            exec:
+              command: ["/bin/sh","-c","./venv/bin/python scripts/healthcheck.py"]
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            exec:
+              command: ["/bin/sh","-c","./venv/bin/python scripts/healthcheck.py"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }

@@ -22,7 +22,7 @@ spec:
           effect: "NoSchedule"
       containers:
         - name: streaming
-          image: ghcr.io/glitch-soc/mastodon-streaming:nightly.2025-08-09
+          image: ghcr.io/glitch-soc/mastodon-streaming:v4.4.4
           command: ["node", "./streaming/index.js"]
           ports:
             - name: streaming

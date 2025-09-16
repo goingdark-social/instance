@@ -17,7 +17,7 @@ spec:
         effect: "NoSchedule"
       containers:
         - name: migrate
-          image: ghcr.io/glitch-soc/mastodon:v4.4.3
+          image: ghcr.io/glitch-soc/mastodon:v4.4.4
           command: ["/bin/bash", "-c", "RAILS_ENV=production DB_PORT=5432 bundle exec rails db:migrate --trace"]
           envFrom:
             - secretRef:
